@@ -28,10 +28,10 @@ public sealed class MultiOption
         return Join(option);
     }
 
-    public Option<TResult> Map<TResult>(Func<object[], TResult> func) =>
+    public Option<TResult> Map<TResult>(Func<object[], int, TResult> func) =>
         exceptions.Count != 0
             ? Option<TResult>.Exception(exceptions.First())
-            : Option<TResult>.Some(func(values.ToArray()));
+            : Option<TResult>.Some(func(values.ToArray(), values.Count));
 
     public async Task<Option<TResult>> MapAsync<TResult>(Func<object[], Task<TResult>> func) =>
         exceptions.Count != 0
