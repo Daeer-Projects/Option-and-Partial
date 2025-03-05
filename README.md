@@ -183,3 +183,100 @@ int SumValues(int a, int b, int c)
 ```
 
 I'm curious on how this is going to look. Has any thought gone into how we will consume the `Option<TValue>`?
+
+The reply from the repo is this:
+
+```csharp
+Option<int> variableOne = serviceOne.GetOne();
+Option<int> variableTwo = serviceTwo.GetTwo();
+Option<int> variableThree = serviceThree.GetThree();
+
+int total = (variableOne, variableTwo, variableThree) switch
+{
+    (Some(var valueOne), Some(var valueTwo), Some(var valueThree)) => SumValues(valueOne, valueTwo, valueThree),
+    _ => 0
+}
+
+return;
+int SumValues(int a, int b, int c)
+{
+    return a + b + c;
+}
+```
+
+Or:
+
+```csharp
+Option<int> variableOne = serviceOne.GetOne();
+Option<int> variableTwo = serviceTwo.GetTwo();
+Option<int> variableThree = serviceThree.GetThree();
+int total = 0;
+
+if ((variableOne, variableTwo, variableThree) is (Some(var a), Some(var b), Some(var c)))
+{
+    total = SumValues(a, b, c);
+}
+
+return;
+int SumValues(int a, int b, int c)
+{
+    return a + b + c;
+}
+```
+
+#### Is this better
+
+The question now becomes, which is the better way to consume the `Option<T>`?
+
+I've created an experiment test to see if this works with what I have and they look like this:
+
+```csharp
+    [Fact]
+    public void Experiment_ToSeeWhatHappens_WithValues_ShouldReturnExpected()
+    {
+        // Arrange.
+        const int expected = 42;
+        Option<int> valOne = Option<int>.Some(10);
+        Option<int> valTwo = Option<int>.Some(20);
+        Option<int> valThree = Option<int>.Some(12);
+        
+        // Act.
+        int total = (valOne, valTwo, valThree) switch
+        {
+            (Some<int> one, Some<int> two, Some<int> three) => SumValues([one.Value, two.Value, three.Value]),
+            _ => 0
+        };
+        
+        // Assert.
+        total.ShouldBe(expected);
+    }
+    
+    [Fact]
+    public void Experiment_ToSeeWhatHappens_WithNone_ShouldReturnZero()
+    {
+        // Arrange.
+        const int expected = 0;
+        Option<int> valOne = Option<int>.Some(10);
+        Option<int> valTwo = Option<int>.None();
+        Option<int> valThree = Option<int>.Some(12);
+        
+        // Act.
+        int total = (valOne, valTwo, valThree) switch
+        {
+            (Some<int> one, Some<int> two, Some<int> three) => SumValues([one.Value, two.Value, three.Value]),
+            _ => 0
+        };
+        
+        // Assert.
+        total.ShouldBe(expected);
+    }
+    
+    private static int SumValues(int[] values)
+    {
+        return values.Sum();
+    }
+```
+
+They work and pass. What I don't like is the `Option<int>.Some(10)` which returns a `Option<int> val`. Having the generic `<T>` on the `Option` class makes this look ugly. Can I push it down to the child classes?
+
+That experiment went a bit disastrously.
