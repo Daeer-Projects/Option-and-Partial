@@ -17,8 +17,8 @@ public class ExperimentalTests
         // Act.
         int total = (valOne, valTwo, valThree) switch
         {
-            (Some<int>(var one), Some<int>(var two), Some<int>(var three)) => SumValues([one, two, three]),
-            (ExceptionOption<int>({ } ex), _, _) => HandleException(ex),
+            (Some<int> one, Some<int> two, Some<int>three) => SumValues([one.Value, two.Value, three.Value]),
+            (ExceptionOption<int> ex, _, _) => HandleException(ex),
             _ => 0
         };
         
@@ -38,8 +38,8 @@ public class ExperimentalTests
         // Act.
         int total = (valOne, valTwo, valThree) switch
         {
-            (Some<int>(var one), Some<int>(var two), Some<int>(var three)) => SumValues([one, two, three]),
-            (ExceptionOption<int>({ } ex), _, _) => HandleException(ex),
+            (Some<int> one, Some<int> two, Some<int> three) => SumValues([one.Value, two.Value, three.Value]),
+            (ExceptionOption<int> ex, _, _) => HandleException(ex),
             _ => 0
         };
     
@@ -59,8 +59,8 @@ public class ExperimentalTests
         // Act.
         int total = (valOne, valTwo, valThree) switch
         {
-            (Some<int>(var one), Some<int>(var two), Some<int>(var three)) => SumValues([one, two, three]),
-            (ExceptionOption<int>({ } ex), _, _) => HandleException(ex),
+            (Some<int> one, Some<int> two, Some<int> three) => SumValues([one.Value, two.Value, three.Value]),
+            (ExceptionOption<int> ex, _, _) => HandleException(ex),
             _ => 0
         };
 

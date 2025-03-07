@@ -4,6 +4,6 @@ public sealed class ExceptionOption<T>(Exception exception) : Option
 {
     public Exception Exception { get; } = exception;
     
-    // Enables pattern matching: (ExceptionOption<int>(Exception ex))
-    public void Deconstruct(out Exception exception) => exception = Exception;
+    // Implicit conversion to Exception, allowing direct pattern matching
+    public static implicit operator Exception(ExceptionOption<T> exOption) => exOption.Exception;
 }
