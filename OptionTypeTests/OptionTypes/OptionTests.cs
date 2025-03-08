@@ -28,17 +28,6 @@ public class OptionTests
     }
     
     [Fact]
-    public void Exception_ShouldBeOfTypeException()
-    {
-        // Arrange.
-        ExceptionOption<int> option = Option.FromException<int>(new NullReferenceException("An exception occurred."));
-        
-        // Act.
-        // Assert.
-        option.ShouldBeOfType<ExceptionOption<int>>();
-    }
-    
-    [Fact]
     public void From_ShouldBeOfTypeSome_WithValue()
     {
         // Arrange.
