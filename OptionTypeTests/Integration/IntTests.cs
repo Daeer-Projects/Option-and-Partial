@@ -54,7 +54,7 @@ public class IntTests
         // Act.
         int total = (valOne, valTwo, valThree) switch
         {
-            (Some<int> one, Some<int> two, Some<int>three) => SumValues([one.Value, two.Value, three.Value]),
+            (Some<int> one, Some<int> two, Some<int> three) => SumValues([one.Value, two.Value, three.Value]),
             _ => 0
         };
         

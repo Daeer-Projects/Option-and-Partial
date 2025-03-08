@@ -22,7 +22,7 @@ I'm just starting this, so it is still up in the air at the moment and will chan
 
 I guess the only way to show how to use the classes is to write unit tests. With unit tests, you get to see how I envisage the usage of the classes and extensions.
 
-### Current usage
+### Initial usage
 
 Say we have three `Option<T>` objects and we want to check that all three have a `Some<T>` and then execute a method that requires all three. Rather than check each version has a `Some<T>` value, we could use a fluent api to check the variables and pass them to the main method. The issue there, would be what if any of those variables was a `None<T>`?
 
@@ -67,6 +67,44 @@ variableOne
     .Map(ProcessThreeVariablesMethod)
     .Fallback(exception => logger.LogError($"Something went wrong. Error: {exception}"));
 ```
+
+### Desired Usage
+
+I would like it to be as simple as possible for the user and I would like it to look nice.
+
+Everything needs to be an `Option` type. To do this, you would need to convert it to an `Option`.
+
+`Option option = 42.ToOption()`.
+
+In this example, 42 is an `int`. The `ToOption()` method checks if the value is `null` or not. If it is not `null` it will be of type `Some`. If it is `null`, it will be of type `None`.
+
+Here are two unit tests that show this.
+
+```csharp
+    [Fact]
+    public void ToOption_WithValueShouldBeOfTypeSome()
+    {
+        // Arrange.
+        Option option = 42.ToOption();
+        
+        // Act.
+        // Assert.
+        option.ShouldBeOfType<Some<int>>();
+    }
+    
+    [Fact]
+    public void ToOption_WithNullShouldBeOfTypeNone()
+    {
+        // Arrange.
+        int? input = null;
+        Option option = input.ToOption();
+        
+        // Act.
+        // Assert.
+        option.ShouldBeOfType<None<int?>>();
+    }
+```
+
 
 ### Partial functions
 
