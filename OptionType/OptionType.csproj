@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Title>Functional Option</Title>
+        <Authors>David Clark</Authors>
+        <Owners>Daeer Projects</Owners>
+        <PackageTags>Daeer;DaeerProjects;Option;Discriminated Unions;DU;DUs;Partial Functions</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>
+            A library to provide a functional option type.
+        </Description>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Deterministic>true</Deterministic>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageProjectUrl>https://github.com/Daeer-Projects/Option-and-Partial</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Daeer-Projects/Option-and-Partial</RepositoryUrl>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Update="Nerdbank.GitVersioning" />
+    </ItemGroup>
+
+</Project>
